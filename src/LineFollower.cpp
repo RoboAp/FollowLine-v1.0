@@ -63,17 +63,23 @@ void LineFollower::stop() {
 
 void LineFollower::followLine() {
 
+    //Robo Andando
     pidControl();
-    if(digitalRead(2) == LOW  && digitalRead(4) == HIGH) {
-        if(millis() - ultimateTime > 300) {
-            Serial.print("Parando...\n");
-            count++;
-            ultimateTime = millis();
+
+    //Código para parar o robô ao tocar um sensor lateral (pino 2 ou 4)
+    if(digitalRead(2) == LOW && digitalRead(4) == HIGH){
+            if(millis() - ultimateTime > 500) {
+                Serial.print("Parando...\n");
+                count++;
+                ultimateTime = millis();
+            }
         }
-    }
+    
     if(count > 1) {
-        Serial.print("PARADO COMPLETO...\n");
+        // parar o robo
+        delay(200);
         stop();
         while(1);
     }
+        
 }

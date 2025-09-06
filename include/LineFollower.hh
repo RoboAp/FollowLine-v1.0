@@ -88,7 +88,7 @@ private:
     int _baseSpeed{45};
 
     // Velocidade máxima dos motores.
-    int _maxSpeed{100};               
+    int _maxSpeed{70};               
 
     // Valores dos componentes Proporcional, Integral e Derivativo. Precisam ser armazenados para a retroalimentação do algoritmo.          
     int _P, _I, _D;

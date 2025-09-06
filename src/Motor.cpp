@@ -37,7 +37,7 @@ void Motor::stop() {
 void Motor::applyState() {
 
     if (_speed == 0) {
-        digitalWrite(_dirPin1, LOW);
+        digitalWrite(_dirPin1, LOW);    
         digitalWrite(_dirPin2, LOW);
     } else if (_direction) {
         analogWrite(_dirPin1, _speed);
