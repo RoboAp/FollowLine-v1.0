@@ -4,7 +4,7 @@
 #include <Motor.hh>
 #include <QTRSensors.h>
 
-#define SENSOR_NUM 6
+#define SENSOR_NUM 8
 
 /**
  * @class LineFollower
@@ -75,13 +75,13 @@ private:
     QTRSensors _qtrSensor;
 
     // Constantes utilizadas pelo algoritmo PID, devem ser ajustadas de acordo com o robô/ambiente.
-    float _kP{0.1f}, _kI{0.001f}, _kD{2.0f};     
+    float _kP{0.11f}, _kI{0.001f}, _kD{2.0f};     
 
     // Erro adquirido pelo controle PID, inicializado em 0.
     int _lastError{0};                          
 
     // Velocidade base dos motores.
-    int _baseSpeed{15};
+    int _baseSpeed{10};
 
     // Velocidade máxima dos motores.
     int _maxSpeed{170};               
