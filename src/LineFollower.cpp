@@ -21,7 +21,7 @@ void LineFollower::calibrationRoutine() {
     // 0,1 ms por sensor * 4 amostras por leitura de sensor * 6 sensores
     // * 10 leituras por chamada de calibrate() = ~24 ms por chamada de calibrate().
     // Executada 400 vezes, leva cerca de 10 segundos.
-    for (uint16_t i = 0; i < 400; i++) {
+    for (uint16_t i = 0; i < 100; i++) {
         _qtrSensor.calibrate();
     }
 
@@ -54,8 +54,26 @@ void LineFollower::pidControl() {
     
 }
 
+void LineFollower::stop() {
+
+    _leftMotor.stop();
+    _rightMotor.stop();
+
+}
+
 void LineFollower::followLine() {
 
     pidControl();
-
+    if(digitalRead(2) == LOW  && digitalRead(4) == HIGH) {
+        if(millis() - ultimateTime > 300) {
+            Serial.print("Parando...\n");
+            count++;
+            ultimateTime = millis();
+        }
+    }
+    if(count > 1) {
+        Serial.print("PARADO COMPLETO...\n");
+        stop();
+        while(1);
+    }
 }

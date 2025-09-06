@@ -4,7 +4,7 @@
 #include <Motor.hh>
 #include <QTRSensors.h>
 
-#define SENSOR_NUM 8
+#define SENSOR_NUM 8    
 
 /**
  * @class LineFollower
@@ -61,10 +61,14 @@ public:
      * @brief Imprime a posição da linha lida pelos sensores para finalidade de debug.
      * 
      */
+
+    void stop();
     void debug();
    
 private:
 
+    int count = 0;
+    long ultimateTime = 0;  
     // Array que armazena as leituras de cada sensor.
     uint16_t _sensorArray[SENSOR_NUM];
 
@@ -75,16 +79,16 @@ private:
     QTRSensors _qtrSensor;
 
     // Constantes utilizadas pelo algoritmo PID, devem ser ajustadas de acordo com o robô/ambiente.
-    float _kP{0.11f}, _kI{0.001f}, _kD{2.0f};     
+    float _kP{0.02f}, _kI{0.00f}, _kD{2.0f};     
 
     // Erro adquirido pelo controle PID, inicializado em 0.
     int _lastError{0};                          
 
     // Velocidade base dos motores.
-    int _baseSpeed{10};
+    int _baseSpeed{45};
 
     // Velocidade máxima dos motores.
-    int _maxSpeed{170};               
+    int _maxSpeed{100};               
 
     // Valores dos componentes Proporcional, Integral e Derivativo. Precisam ser armazenados para a retroalimentação do algoritmo.          
     int _P, _I, _D;
