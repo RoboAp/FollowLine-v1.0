@@ -5,7 +5,7 @@
 #include <QTRSensors.h>
 
 #define SENSOR_NUM 8    
-
+extern int count;  // Apenas DECLARA a variável, não a cria
 /**
  * @class LineFollower
  * @brief Implementa funcionalidades de um robô seguidor de linhas que utiliza sensores QTR, da Pololu, e um algoritmo de controle PID.
@@ -14,8 +14,8 @@
  * 
  */
 class LineFollower {
-public: 
-
+    public: 
+    
     /**
      * @brief Construtor para um objeto seguidor de linhas, recebe ambos motores, que devem ser instanciados separadamente.
      * 
@@ -24,9 +24,9 @@ public:
      */
     LineFollower(Motor &rightMotor, Motor &leftMotor) : _rightMotor {rightMotor}, _leftMotor {leftMotor} 
     {
-
+        
     };
-
+    
     /**
      * @brief Inicializa o seguidor de linha dentro do escopo da função setup(), no arquivo main.ino.
      * 
@@ -36,13 +36,13 @@ public:
      * @param emmiterPin Pino responsável pelo controle do emissor do sensor.
      */
     void init(const uint8_t sensorPins[], const int emmiterPin);
-
+    
     /**
      * @brief Implementa uma rotina de calibração, seguindo o padrão fornecido pela documentação pela biblioteca QTRSensors.
      * 
      */
     void calibrationRoutine();
-
+    
     /**
      * @brief Implementa um algoritmo de controle PID para os 6 sensores utilizados. Setpoint com uma leitura de 2500 para manter a linha no meio do sensor.
      * 
@@ -66,9 +66,9 @@ public:
     void debug();
    
 private:
-
-    int count = 0;
     long ultimateTime = 0;  
+    bool _sensoresLateralDireito; // Estado inicial: Sensores laterais ativos.
+    bool _sensoresLateralEsquerdo; // Estado inicial: Sensores laterais ativos.
     // Array que armazena as leituras de cada sensor.
     uint16_t _sensorArray[SENSOR_NUM];
 
@@ -79,16 +79,18 @@ private:
     QTRSensors _qtrSensor;
 
     // Constantes utilizadas pelo algoritmo PID, devem ser ajustadas de acordo com o robô/ambiente.
-    float _kP{0.02f}, _kI{0.00f}, _kD{2.0f};     
+    float _kP{0.35f}, _kI{0.000f}, _kD{3.0f};    
+    
+    //  float _kP{0.1f}, _kI{0.001f}, _kD{10.0f};     
 
     // Erro adquirido pelo controle PID, inicializado em 0.
     int _lastError{0};                          
 
     // Velocidade base dos motores.
-    int _baseSpeed{45};
+    int _baseSpeed{60};
 
     // Velocidade máxima dos motores.
-    int _maxSpeed{70};               
+    int _maxSpeed{80};               
 
     // Valores dos componentes Proporcional, Integral e Derivativo. Precisam ser armazenados para a retroalimentação do algoritmo.          
     int _P, _I, _D;
