@@ -6,6 +6,7 @@
 
 #define SENSOR_NUM 8    
 extern int count;  // Apenas DECLARA a variável, não a cria
+extern float ultimoTempo;
 /**
  * @class LineFollower
  * @brief Implementa funcionalidades de um robô seguidor de linhas que utiliza sensores QTR, da Pololu, e um algoritmo de controle PID.
@@ -79,7 +80,7 @@ private:
     QTRSensors _qtrSensor;
 
     // Constantes utilizadas pelo algoritmo PID, devem ser ajustadas de acordo com o robô/ambiente.
-    float _kP{0.35f}, _kI{0.000f}, _kD{3.0f};    
+    float _kP{0.36f}, _kI{0.000f}, _kD{0.5f};    
     
     //  float _kP{0.1f}, _kI{0.001f}, _kD{10.0f};     
 

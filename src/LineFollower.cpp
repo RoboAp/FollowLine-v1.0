@@ -123,4 +123,73 @@ void LineFollower::followLine() {
         stop();
         while (1); // Para permanentemente
     }
+    // --- 1. O PID e a leitura dos sensores principais sempre rodam ---
+    pidControl();
+    uint16_t sensorValues[8];
+    _qtrSensor.read(sensorValues);
+
+    // --- 2. Lógica de controle dos sensores laterais ---
+
+    // Se sensores laterais estão ATIVOS
+   /* if (_sensoresLateralDireito && _sensoresLateralEsquerdo) {
+        
+        // Verifica se é uma INTERSECÇÃO (todos sensores frontais no branco)
+        bool intersecao = true;
+        for (int i = 0; i < 8; i++) {
+            if (sensorValues[i] >= LIMIAR_BRANCO) {
+                intersecao = false;
+                break;
+            }
+        }
+
+        if (intersecao) {
+            Serial.println("INTERSECÇÃO detectada! Desativando sensores laterais.");
+            _sensoresLateralDireito = false;
+            _sensoresLateralEsquerdo = false;
+        } 
+        else {
+            // Lógica normal de contagem (apenas quando sensores estão ativos)
+            if (digitalRead(2) == LOW && digitalRead(4) == HIGH) {
+                if (millis() - ultimateTime > 500) {
+                    Serial.print("Marca lateral detectada! Contagem: ");
+                    Serial.println(count);
+                    count++;
+                    ultimateTime = millis();
+                }
+            }
+        }
+    }
+    // Se sensores laterais estão DESATIVADOS (após intersecção)
+    else {
+        // Só reativa quando AMBOS sensores laterais detectarem branco
+        if (digitalRead(2) == HIGH && digitalRead(4) == HIGH) {
+            Serial.println("SAÍDA DA INTERSECÇÃO: Reativando sensores laterais.");
+            _sensoresLateralDireito = true;
+            _sensoresLateralEsquerdo = true;
+        }
+    }
+*/
+
+    if (digitalRead(2) == LOW){
+        //stop();
+        if(digitalRead(4)==HIGH && ((millis()-ultimoTempo) >= 30000)){
+            count++;
+            ultimoTempo = millis();    
+            digitalWrite(LED_BUILTIN, HIGH);
+            digitalWrite(LED_BUILTIN, LOW);
+        } 
+        return;
+    }
+    // --- 3. Condição de parada final ---
+    if (count > 1) {
+        Serial.print("LINHA DE CHEGADA DETECTADA! PARANDO...\n");
+        digitalWrite(LED_BUILTIN, HIGH);
+        stop();
+        _leftMotor.setSpeed(50);
+        _rightMotor.setSpeed(50);
+        delay(700);
+        digitalWrite(LED_BUILTIN, LOW);
+        stop();
+        while(1); // Para totalmente
+}
 }

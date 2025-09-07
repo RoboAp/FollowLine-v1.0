@@ -3,6 +3,7 @@
 #include <LineFollower.hh>
 
 int count = 0; // Aqui a variável é criada e inicializada 
+float ultimoTempo = 0;
 
 const uint8_t sensorPins[] = {A0 ,A1, A2, A3, A4, A5, A6, A7};
 const uint8_t emitterPin = 12;
@@ -23,6 +24,7 @@ void loop() {
     buttonState = 1;
     count = 0; // Reseta contador ao iniciar
     delay(500); // Debounce
+    ultimoTempo = millis();
     while (buttonState == 1) {
       lineFollower.followLine();
     }
