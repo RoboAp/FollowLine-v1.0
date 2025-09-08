@@ -80,18 +80,23 @@ private:
     QTRSensors _qtrSensor;
 
     // Constantes utilizadas pelo algoritmo PID, devem ser ajustadas de acordo com o robô/ambiente.
-    float _kP{0.36f}, _kI{0.000f}, _kD{0.5f};    
+    //float _kP{0.6f}, _kI{0.005f}, _kD{6.0f};    
     
-    //  float _kP{0.1f}, _kI{0.001f}, _kD{10.0f};     
+    // 0.03 -> alto
+    // 0.0215 -> ainda baixo (?)
+    // 0.020 -> ainda baixo
+    // 0.015 -> baixo
+    float _kP{0.015f}, _kI{0.000f}, _kD{0.0f};     
 
     // Erro adquirido pelo controle PID, inicializado em 0.
     int _lastError{0};                          
 
     // Velocidade base dos motores.
-    int _baseSpeed{60};
-
+    //int _baseSpeed{75};
+    int _baseSpeed{80};
     // Velocidade máxima dos motores.
-    int _maxSpeed{80};               
+    //int _maxSpeed{120};
+    int _maxSpeed{100};               
 
     // Valores dos componentes Proporcional, Integral e Derivativo. Precisam ser armazenados para a retroalimentação do algoritmo.          
     int _P, _I, _D;

@@ -26,7 +26,8 @@ void loop() {
     delay(500); // Debounce
     ultimoTempo = millis();
     while (buttonState == 1) {
+      lineFollower.debug();
       lineFollower.followLine();
     }
   }
-}
+}int _baseSpeed{75};
